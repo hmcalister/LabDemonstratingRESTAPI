@@ -22,6 +22,8 @@ Defines the API endpoints using GIN. API endpoints are near one-to-one mappings 
 
 This module will also eventually handle the front end serving of the webserver, as the GIN router is already defined here. Perhaps in future this responsibility will be shifted to a new module and the API can simply act on a separate port?
 
+Something to look into in future is finding the correct HTTP response code for various events. Currently, most requests return 200 (OK) or an internal service error if something goes wrong. Some functions return a response code based on the most likely error (e.g. if a `PUT` request failed it's probably because the primary key is not unique).
+
 ### Main
 A (hopefully!) very simple module to glue to above modules together. Handles getting command line arguments, setting up the database module, starting the API and any shutdown.
 

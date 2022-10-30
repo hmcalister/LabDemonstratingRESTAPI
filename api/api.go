@@ -1,10 +1,8 @@
 package api
 
 import (
-	"hmcalister/database"
-	"hmcalister/models"
+	"io"
 	"log"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/mattn/go-sqlite3"
@@ -22,19 +20,30 @@ func checkError(err error) {
 	}
 }
 
-func getAllStudents(c *gin.Context) {
-	var allStudents []models.Student
-	var err error
-	allStudents, err = database.GetAllStudents()
-	checkError(err)
-
-	c.IndentedJSON(http.StatusOK, allStudents)
-}
-
-func SetupAPI() {
-
+func SetupAPI(logFile io.Writer) {
+	gin.DefaultWriter = logFile
 	router := gin.Default()
+	router.SetTrustedProxies([]string{"127.0.0.1"})
+
+	// Student endpoints
+	router.POST("/students", createStudent)
 	router.GET("/students", getAllStudents)
+	router.GET("/students/:studentCode", getStudentByStudentCode)
+	router.DELETE("/students/:studentCode", deleteStudentByStudentCode)
+
+	// Lab endpoints
+	router.POST("/labs", createLab)
+	router.GET("/labs", getAllLabs)
+	router.GET("/labs/:labID", getLabByLabID)
+	router.PUT("/labs/:labID", updateLabByLabID)
+	router.DELETE("/labs/:labID", deleteLabByLabID)
+
+	// Lab completion endpoints
+	router.POST("/labCompletions", createLabCompletion)
+	router.GET("/labCompletions", getAllLabCompletions)
+	router.GET("/labCompletions/:studentCode", getAllLabCompletionsByStudentCode)
+	router.GET("/labCompletions/:studentCode/:labID", getLabCompletionByStudentCodeAndLabID)
+	router.DELETE("/labCompletions/:studentCode/:labID", deleteLabCompletionByStudentCodeAndLabID)
 
 	router.Run("localhost:8080")
 }

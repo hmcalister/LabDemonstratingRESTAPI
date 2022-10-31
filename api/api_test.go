@@ -14,6 +14,8 @@ import (
 	"os"
 	"testing"
 	"time"
+
+	"github.com/gin-gonic/gin"
 )
 
 const API_URL_PREFIX string = "http://localhost:8080"
@@ -21,8 +23,13 @@ const API_URL_PREFIX string = "http://localhost:8080"
 func TestStartAPI(t *testing.T) {
 	os.Remove("./test_database.db")
 	database.CreateDatabase("./test_database.db")
-	logFile, _ := os.Create("api_test.log")
-	go api.SetupAPI(logFile)
+
+	gin.DefaultWriter, _ = os.Create("api_test.log")
+	router := gin.Default()
+	router.SetTrustedProxies([]string{"127.0.0.1", "[::1]"})
+	api.SetupAPI(router)
+
+	go router.Run("localhost:8080")
 
 }
 

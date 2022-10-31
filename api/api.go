@@ -1,7 +1,6 @@
 package api
 
 import (
-	"io"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -20,10 +19,7 @@ func checkError(err error) {
 	}
 }
 
-func SetupAPI(logFile io.Writer) {
-	gin.DefaultWriter = logFile
-	router := gin.Default()
-	router.SetTrustedProxies([]string{"127.0.0.1"})
+func SetupAPI(router *gin.Engine) {
 
 	// Student endpoints
 	router.POST("/students", createStudent)
@@ -44,6 +40,4 @@ func SetupAPI(logFile io.Writer) {
 	router.GET("/labCompletions/:studentCode", getAllLabCompletionsByStudentCode)
 	router.GET("/labCompletions/:studentCode/:labID", getLabCompletionByStudentCodeAndLabID)
 	router.DELETE("/labCompletions/:studentCode/:labID", deleteLabCompletionByStudentCodeAndLabID)
-
-	router.Run("localhost:8080")
 }

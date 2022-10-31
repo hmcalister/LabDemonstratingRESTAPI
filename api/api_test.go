@@ -232,7 +232,7 @@ func TestDeleteLabCompletion(t *testing.T) {
 	if err != nil {
 		t.Errorf("Failed to execute delete request! %v", err)
 	}
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode != http.StatusNoContent {
 		t.Errorf("Failed to correctly delete lab completion! %v", err)
 	}
 }
@@ -248,7 +248,7 @@ func TestDeleteStudentByStudentCode(t *testing.T) {
 	if err != nil {
 		t.Errorf("Failed to execute delete request! %v", err)
 	}
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode != http.StatusNoContent {
 		t.Errorf("Failed to correctly delete student! %v", err)
 	}
 }
@@ -264,7 +264,7 @@ func TestDeleteLabByLabID(t *testing.T) {
 	if err != nil {
 		t.Errorf("Failed to execute delete request! %v", err)
 	}
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode != http.StatusNoContent {
 		t.Errorf("Failed to correctly delete lab! %v", err)
 	}
 }

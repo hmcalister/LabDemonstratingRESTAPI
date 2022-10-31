@@ -6,6 +6,7 @@ import (
 	"hmcalister/models"
 	"log"
 	"os"
+
 )
 
 func checkFatalError(err error) {
@@ -48,4 +49,11 @@ func main() {
 	os.Remove("database.db")
 	insertTestData()
 	api.SetupAPI()
+
+	gin.DefaultWriter = routerLogFile
+	router := gin.Default()
+	router.SetTrustedProxies([]string{"127.0.0.1"})
+	api.SetupAPI(router)
+
+	router.Run("localhost:" + fmt.Sprint(*portNumber))
 }

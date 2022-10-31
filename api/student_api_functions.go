@@ -49,9 +49,9 @@ func getStudentByStudentCode(c *gin.Context) {
 	checkError(err)
 	if err != nil {
 		c.IndentedJSON(http.StatusNotFound, nil)
-	} else {
-		c.IndentedJSON(http.StatusOK, student)
+		return
 	}
+	c.IndentedJSON(http.StatusOK, student)
 }
 
 func deleteStudentByStudentCode(c *gin.Context) {
@@ -60,9 +60,9 @@ func deleteStudentByStudentCode(c *gin.Context) {
 	checkError(err)
 	if err != nil {
 		// Again, PROBABLY correct status...
-		c.IndentedJSON(http.StatusNoContent, nil)
+		c.IndentedJSON(http.StatusBadRequest, nil)
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, nil)
+	c.IndentedJSON(http.StatusNoContent, nil)
 }

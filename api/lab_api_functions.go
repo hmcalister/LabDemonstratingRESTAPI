@@ -95,9 +95,9 @@ func deleteLabByLabID(c *gin.Context) {
 	checkError(err)
 	if err != nil {
 		// Again, PROBABLY correct status...
-		c.IndentedJSON(http.StatusNoContent, nil)
+		c.IndentedJSON(http.StatusBadRequest, nil)
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, nil)
+	c.IndentedJSON(http.StatusNoContent, nil)
 }

@@ -69,7 +69,7 @@ func getLabCompletionByStudentCodeAndLabID(c *gin.Context) {
 	labCompletion, err := database.GetLabCompletionByStudentCodeAndLabID(studentCode, labID)
 	checkError(err)
 	if err != nil {
-		c.IndentedJSON(http.StatusNoContent, nil)
+		c.IndentedJSON(http.StatusBadRequest, nil)
 		return
 	}
 	c.IndentedJSON(http.StatusOK, labCompletion)
@@ -86,8 +86,8 @@ func deleteLabCompletionByStudentCodeAndLabID(c *gin.Context) {
 
 	err = database.DeleteLabCompletionByStudentCodeAndLabID(studentCode, labID)
 	if err != nil {
-		c.IndentedJSON(http.StatusNoContent, nil)
+		c.IndentedJSON(http.StatusBadRequest, nil)
 		return
 	}
-	c.IndentedJSON(http.StatusOK, nil)
+	c.IndentedJSON(http.StatusNoContent, nil)
 }

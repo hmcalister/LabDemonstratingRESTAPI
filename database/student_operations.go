@@ -1,6 +1,7 @@
 package database
 
 import (
+	"errors"
 	"hmcalister/models"
 )
 
@@ -19,6 +20,16 @@ func GetStudentByStudentCode(StudentCode string) (models.Student, error) {
 	var Student models.Student
 	result := conn.First(&Student, "StudentCode = ?", StudentCode)
 	return Student, result.Error
+}
+
+func UpdateStudentByStudentCode(studentCode string, updatedStudent models.Student) error {
+	if updatedStudent.StudentCode != studentCode {
+		return errors.New("cannot change StudentCode")
+	}
+	// Save for SOME reason doesn't correctly update with string primary key
+	result := conn.Model(&updatedStudent).Select("*").Updates(updatedStudent)
+
+	return result.Error
 }
 
 func DeleteStudentByStudentCode(StudentCode string) error {

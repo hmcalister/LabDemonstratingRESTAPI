@@ -15,7 +15,9 @@ type User struct {
 type Student struct {
 	gorm.Model
 	StudentCode string `json:"StudentCode" gorm:"primaryKey;column:StudentCode;unique:true"`
-	FullName    string `json:"FullName"`
+	FirstName   string `json:"FirstName"`
+	MiddleNames string `json:"MiddleNames"`
+	LastName    string `json:"LastName"`
 }
 
 type Lab struct {

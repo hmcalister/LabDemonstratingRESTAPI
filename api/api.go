@@ -25,6 +25,7 @@ func SetupAPI(router *gin.Engine) {
 	router.POST("/students", createStudent)
 	router.GET("/students", getAllStudents)
 	router.GET("/students/:studentCode", getStudentByStudentCode)
+	router.PUT("/students/:studentCode", updateStudentByStudentCode)
 	router.DELETE("/students/:studentCode", deleteStudentByStudentCode)
 
 	// Lab endpoints

@@ -54,6 +54,30 @@ func getStudentByStudentCode(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, student)
 }
 
+func updateStudentByStudentCode(c *gin.Context) {
+	var newStudent models.Student
+	var err error
+
+	studentCode := c.Param("studentCode")
+	checkError(err)
+
+	err = c.BindJSON(&newStudent)
+	checkError(err)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, nil)
+		return
+	}
+
+	err = database.UpdateStudentByStudentCode(studentCode, newStudent)
+	checkError(err)
+	if err != nil {
+		c.IndentedJSON(http.StatusBadRequest, nil)
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, newStudent)
+}
+
 func deleteStudentByStudentCode(c *gin.Context) {
 	studentCode := c.Param("studentCode")
 	err := database.DeleteStudentByStudentCode(studentCode)

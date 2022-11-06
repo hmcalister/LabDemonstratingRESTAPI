@@ -32,6 +32,7 @@ func main() {
 	routerLogFilepath := flag.String("routerLog", "", "File to store router logs. If not set, print router logs to STDOUT.")
 	debugMode := flag.Bool("debug", false, "Run application in debug mode. e.g. allow CORS on API, insert some test data...")
 	flag.Parse()
+
 	if *debugMode {
 		log.Println("DEBUG MODE: ON")
 		insertTestData(*databaseFilepath)
@@ -55,6 +56,11 @@ func main() {
 	if *debugMode {
 		router.Use(CORSMiddleware())
 	}
+
+	router.GET("/", func(c *gin.Context) {
+		c.Redirect(http.StatusMovedPermanently, "http://localhost:8080/www")
+	})
+	router.StaticFS("/www", http.Dir("./www"))
 	api.SetupAPI(router)
 
 	log.Println("APPLICATION READY: http://localhost:8080/")

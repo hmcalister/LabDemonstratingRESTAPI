@@ -3,7 +3,10 @@
 
 Implementation of a RESTful API for lab demonstrating using Golang. Components are split into modules (which may more may not be best Golang practice?) and are described below. 
 
-The intention of this project is to expose a web interface for a lab marking application. This requires state, hence, a REST api over a database. The end goal is to have an executable that spins up a webserver hosting both a React app frontend and REST api to interact with the database. Most of the CRUD operations will have implementations (see database section below).
+The intention of this project is to expose a web interface for a lab marking application. This requires state, hence, a REST api over a database. The end goal is to have an executable that spins up a webserver hosting both a web app frontend and REST api to interact with the database. Most of the CRUD operations will have implementations (see database section below).
+
+## Running this project
+To see this project in action, grab one of the releases (including an executable binary and the web app interface) and run it using `./rest_api`. If you need to build the application for a different platform, pull the source code and run `go build ./main`. Run the executable (use `-h` to get a summary of command line flags and options) and follow the link printed to start marking labs.
 
 ## Modules
 ### Models

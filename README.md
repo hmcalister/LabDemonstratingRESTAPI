@@ -30,3 +30,5 @@ Something to look into in future is finding the correct HTTP response code for v
 ### Main
 A (hopefully!) very simple module to glue to above modules together. Handles getting command line arguments, setting up the database module, starting the API and any shutdown.
 
+The web application front end was built using Vue and the (admittedly terrible) source code can be found at https://github.com/Gamma749/LabDemonstratingVueFrontend
+

@@ -2,12 +2,11 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"hmcalister/api"
 	"hmcalister/database"
-	"hmcalister/models"
 	"io"
 	"log"
+	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -25,39 +24,24 @@ func checkError(err error) {
 	}
 }
 
-func insertTestData(databaseFilepath string) {
-	os.Remove(databaseFilepath)
-	err := database.CreateDatabase(databaseFilepath)
-	checkFatalError(err)
-
-	newStudents := []models.Student{
-		{
-			StudentCode: "hayden000",
-			FullName:    "Hayden McAlister",
-		},
-		{
-			StudentCode: "alice123",
-			FullName:    "Alice",
-		},
-		{
-			StudentCode: "bob456",
-			FullName:    "Bob",
-		},
-	}
-
-	for _, student := range newStudents {
-		database.CreateStudent(student)
-	}
-}
-
 func main() {
 	var err error
 	var routerLogFile io.Writer
 
-	databaseFilepath := flag.String("database", "database.db", "Database file to use. Defaults to 'database.db'.")
+	databaseFilepath := flag.String("database", "database.db", "Database file to use. Files stored locally, use a different file for each paper.")
 	routerLogFilepath := flag.String("routerLog", "", "File to store router logs. If not set, print router logs to STDOUT.")
-	portNumber := flag.Int("port", 80, "Port to serve webserver and API on. Defaults to 80.")
+	debugMode := flag.Bool("debug", false, "Run application in debug mode. e.g. allow CORS on API, insert some test data...")
 	flag.Parse()
+	if *debugMode {
+		log.Println("DEBUG MODE: ON")
+		insertTestData(*databaseFilepath)
+	} else {
+		log.SetFlags(log.Ldate | log.Ltime | log.Lshortfile)
+		gin.SetMode(gin.ReleaseMode)
+		err := database.CreateDatabase(*databaseFilepath)
+		checkFatalError(err)
+	}
+
 	if *routerLogFilepath == "" {
 		routerLogFile = os.Stdout
 	} else {
@@ -65,12 +49,14 @@ func main() {
 		checkFatalError(err)
 	}
 
-	insertTestData(*databaseFilepath)
-
 	gin.DefaultWriter = routerLogFile
 	router := gin.Default()
 	router.SetTrustedProxies([]string{"127.0.0.1"})
+	if *debugMode {
+		router.Use(CORSMiddleware())
+	}
 	api.SetupAPI(router)
 
-	router.Run("localhost:" + fmt.Sprint(*portNumber))
+	log.Println("APPLICATION READY: http://localhost:8080/")
+	router.Run("localhost:8080")
 }

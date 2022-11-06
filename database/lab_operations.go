@@ -1,6 +1,7 @@
 package database
 
 import (
+	"errors"
 	"hmcalister/models"
 )
 
@@ -22,7 +23,10 @@ func GetLabByLabID(LabID int) (models.Lab, error) {
 }
 
 func UpdateLabByLabID(LabID int, newLab models.Lab) error {
-	result := conn.Model(&newLab).Updates(newLab)
+	if newLab.ID != LabID {
+		return errors.New("cannot update LabID")
+	}
+	result := conn.Save(&newLab)
 	return result.Error
 }
 

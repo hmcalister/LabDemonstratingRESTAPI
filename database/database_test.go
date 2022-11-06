@@ -53,7 +53,8 @@ func TestUpdateUserPassword(t *testing.T) {
 func TestCreateStudent(t *testing.T) {
 	newStudent := models.Student{
 		StudentCode: "hayden000",
-		FullName:    "Hayden McAlister",
+		FirstName:   "Hayden",
+		LastName:    "McAlister",
 	}
 
 	err := database.CreateStudent(newStudent)
@@ -71,12 +72,13 @@ func TestGetAllStudents(t *testing.T) {
 
 func TestGetStudentByStudentCode(t *testing.T) {
 	fullName := "Hayden McAlister"
+	lastName := "McAlister"
 	student, err := database.GetStudentByStudentCode("hayden000")
 	if err != nil {
 		t.Errorf("Failed to get student by student code!")
 	}
 
-	if student.FullName != fullName {
+	if student.LastName != lastName {
 		t.Errorf("Failed to get correct student by code!")
 	}
 }

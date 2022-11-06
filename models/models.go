@@ -1,8 +1,6 @@
 package models
 
 import (
-	"time"
-
 	"gorm.io/gorm"
 )
 
@@ -30,9 +28,9 @@ type Lab struct {
 
 type LabCompletion struct {
 	gorm.Model
-	StudentCode string    `json:"StudentCode" gorm:"column:StudentCode;primaryKey;autoIncrement:false;"`
-	Student     Student   `gorm:"foreignKey:StudentCode"`
-	LabID       int       `json:"LabID" gorm:"column:LabID;primaryKey;autoIncrement:false"`
-	Lab         Lab       `gorm:"foreignKey:LabID"`
-	Timestamp   time.Time `json:"Timestamp"`
+	StudentCode string  `json:"StudentCode" gorm:"column:StudentCode;primaryKey;autoIncrement:false;"`
+	Student     Student `gorm:"foreignKey:StudentCode"`
+	LabID       int     `json:"LabID" gorm:"column:LabID;primaryKey;autoIncrement:false"`
+	Lab         Lab     `gorm:"foreignKey:LabID"`
+	// Timestamp   time.Time `json:"Timestamp"`
 }

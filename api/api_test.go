@@ -13,7 +13,6 @@ import (
 	"net/http"
 	"os"
 	"testing"
-	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -169,7 +168,6 @@ func TestCreateLabCompletion(t *testing.T) {
 	newLabCompletion := models.LabCompletion{
 		StudentCode: "alice123",
 		LabID:       1,
-		Timestamp:   time.Now(),
 	}
 	jsonLab, _ := json.Marshal(&newLabCompletion)
 	responseBody := bytes.NewBuffer(jsonLab)

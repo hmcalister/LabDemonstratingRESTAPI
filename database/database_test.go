@@ -5,7 +5,6 @@ import (
 	"hmcalister/models"
 	"os"
 	"testing"
-	"time"
 )
 
 // SETUP DATABASE
@@ -71,7 +70,6 @@ func TestGetAllStudents(t *testing.T) {
 }
 
 func TestGetStudentByStudentCode(t *testing.T) {
-	fullName := "Hayden McAlister"
 	lastName := "McAlister"
 	student, err := database.GetStudentByStudentCode("hayden000")
 	if err != nil {
@@ -123,7 +121,6 @@ func TestCreateLabCompletion(t *testing.T) {
 	newLabCompletion := models.LabCompletion{
 		StudentCode: "hayden000",
 		LabID:       1,
-		Timestamp:   time.Now(),
 	}
 
 	err := database.CreateLabCompletion(newLabCompletion)

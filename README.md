@@ -1,7 +1,7 @@
 # Lab Demonstrating RESTful API
 #### Hayden McAlister <haydenmcalister49@gmail.com>
 
-Implementation of a RESTful API for lab demonstrating using Golang. Components are split into modules (which may more may not be best Golang practice?) and are described below. 
+Implementation of a RESTful API for lab demonstrating using Golang. Components are split into modules (which may or may not be best Golang practice?) and are described below. 
 
 The intention of this project is to expose a web interface for a lab marking application. This requires state, hence, a REST api over a database. The end goal is to have an executable that spins up a webserver hosting both a web app frontend and REST api to interact with the database. Most of the CRUD operations will have implementations (see database section below).
 
